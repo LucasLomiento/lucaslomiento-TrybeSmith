@@ -7,6 +7,12 @@ async function register(req: Request, res: Response) {
   res.status(201).json(product);
 }
 
+async function getAll(_req: Request, res: Response) {
+  const allProducts = await productsService.getAll();
+  res.status(200).json(allProducts);
+}
+
 export default {
   register,
+  getAll,
 };
