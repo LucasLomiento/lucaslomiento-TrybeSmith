@@ -1,15 +1,16 @@
 import OrdersModel from '../database/models/order.model';
 import { Order, OrderWithProduct } from '../types/Order';
+import { ServiceResponse } from '../types/ServiceResponse';
 
-async function getAll(): Promise<Order[]> {
-  const allOrders = await OrdersModel.findAll({
+async function getAll(): Promise<ServiceResponse<Order[]>> {
+  const getAllOrders = await OrdersModel.findAll({
     include: [{
       association: 'productIds',
       attributes: ['id'],
     }],
   });
 
-  const dataOrders = allOrders.map((order) => order.dataValues) as OrderWithProduct[];
+  const dataOrders = getAllOrders.map((order) => order.dataValues) as OrderWithProduct[];
 
   const orders = dataOrders.map((order) => ({
     id: order.id,
@@ -17,7 +18,9 @@ async function getAll(): Promise<Order[]> {
     productIds: order.productIds.map((product: { id: number }) => product.id),
   }));
 
-  return orders;
+  const responseService: ServiceResponse<Order[]> = { status: 'SUCCESSFUL', data: orders };
+
+  return responseService;
 }
 
 export default {

@@ -1,3 +1,7 @@
+export type ProductId = {
+  id: number;
+};
+
 export type Product = {
   id: number;
   name: string;
@@ -5,6 +9,8 @@ export type Product = {
   orderId: number;
 };
 
-export type ProductId = {
+export type ProductCreated = {
   id: number;
+  name: string;
+  price: string;
 };
